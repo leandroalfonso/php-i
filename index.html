@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 id="list"></h1>
+    <form id="uploadForm">
+        <input type="text" name="nome" placeholder="Nome">
+        <input type="number" name="idade" placeholder="Idade">
+        <input type="text" name="cidade" placeholder="Cidade">
+        <input type="file" name="imagem" placeholder="imagens">
+        <button type="submit">Enviar</button>
+    </form>
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const formData = new FormData(e.target);
+
+            fetch('https://api-php3.vercel.app/api/api.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then((res) => {
+                return res.json();
+            })
+            .then((data) => {
+                console.log(data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+        });
+
+        fetch('https://api-php3.vercel.app/api/api.php')
+            .then((res) => {
+                return res.json();
+            })
+            .then((data) => {
+                document.getElementById('list').innerHTML = `<p>${data.nome}</p>`;
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    </script>
+</body>
+</html>
